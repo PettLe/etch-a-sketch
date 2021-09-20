@@ -1,36 +1,41 @@
 /*Maybe first create few helpful global variables. Can make them local later*/
 const grid = document.querySelector("#grid-container");
 const box = document.createElement("div");
+let size = 16;
+const button = document.querySelector(".clear");
 
-
-/* First we need to create a grid. Use loops to iterate through it. First one for
-a single row and number of boxes, second one for the number of rows.
-Probably need to use querySelectors, createElement and appendChild*/
-
-for (i= 0; i<16; i++) {
+/* Creating the canvas grid by iterating. Then adding eventListener for the
+mouse movement.*/
+function canvas() {
+for (i = 0; i < size; i++) {
     const row = document.createElement("div");
     row.classList.add("row");
     grid.appendChild(row);
-    for (j= 0; j<16; j++) {
+    for (j = 0; j < size; j++) {
     const box = document.createElement("div");
     box.classList.add("box");
     row.appendChild(box);
     box.addEventListener("mouseover", function(e) {
-        e.target.style.background = 'blue';
+        e.target.style.background = 'black';
+        e.target.style.opacity = "1";
     })
 }
 }
-/*Using eventListener (hover?) make the boxes change color. Or maybe create
-a CSS class :hover and call that with the use of a eventListener?
-It's probably possible. Maybe easier.*/
-box.addEventListener("mouseover", function(e) {
-    e.target.style.background = 'blue';
-})
-
+}
 /*Need a CLEAR button. Probably similiar to the one I used in the RPS-UI.
 Also when clicked, prompt should pop up asking for the size of the new canvas.
 That number should link to the first phase.
 Sliders probably acceptable and nifty solution too.*/
 
-/*Call the function immediately when the page loads?*/
+button.addEventListener("click", function() {
+    let newSize = parseInt(prompt("New size?"));
+    if (newSize > 1 && newSize < 101) {
+        size = newSize;
+        canvas();
+    } else {
+        alert("Please use a number between 2 and 100");
+    }
+    console.log(size);
+})
 
+canvas();
